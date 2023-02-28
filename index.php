@@ -1,27 +1,12 @@
-<?php require_once("./connection.php"); ?>
-<?php
-if(!isset($_SESSION)) { 
-	session_start(); 
-};
-
-function getNotification() {
-	global $db;
-
-	$query = $db -> prepare("SELECT * FROM notifications");
-	$query -> execute();
-	$result = $query -> fetchAll(PDO::FETCH_ASSOC);
-	return $result;
-}
-?>
+<?php require_once("./Functions.php"); ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Basit Bildirim Sistemi</title>
+	<title>Bildirim Sistemi</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </head>
 <body>
 
@@ -29,33 +14,32 @@ function getNotification() {
 		<div class="row">
 			<div class="col-md-12 mt-5">
 				<nav class="navbar navbar-expand-lg navbar-light bg-light">
-					<a class="navbar-brand" href="#">Bildirim</a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+					<a class="navbar-brand" href="#">Bildirim Sistemi</a>
+					<button class="navbar-toggler">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarNavDropdown">
 						<ul class="navbar-nav">
-							<li class="nav-item">
-								<a class="nav-link" href="https://github.com/vFurky/notification-with-php">Github</a>
-							</li>
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" id="notifications" href="#" data-toggle="dropdown">
+								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
 									<i class="fa-solid fa-bell"></i> 
 									<?php
-									$notiNum = $db -> query("SELECT COUNT(*) FROM notifications WHERE status = 'Unread'");
-									$notifNum = $notiNum -> fetchColumn();
 									if($notifNum > 0) {
 										echo $notifNum;
 									};
 									?>
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									<?php
-									$result = getNotification();
-									foreach ($result as $a) {
-										echo '<a class="dropdown-item" href="#">' . $a['content'] . '</a>';
-									}
-									?>
+									<div class="col-md-12 mt-1">
+										<?php
+										$result = getNotification();
+										foreach ($result as $a) {
+											echo '<a class="dropdown-item" href="#">' . $a['content'] . '</a>';
+										}
+										?>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item col-md-12 mt-1" onclick="readNotifications()">Okundu olarak işaretle</a>
+									</div>
 								</div>
 							</li>
 						</ul>
@@ -69,29 +53,35 @@ function getNotification() {
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/648418db2c.js" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<script type="text/javascript">
-		
-		$(document).ready(function(){
-			$("#notifications").click(function(){
-				<?php 
-				$oldStat = 'Unread';
-				$newStat = 'Read';
-				$notquery = $db -> prepare("UPDATE notifications SET status = ? WHERE status = '$oldStat'");
-				$notquery -> bindParam(1, $newStat, PDO::PARAM_STR);
-				$notquery -> execute();
-				if($notquery) {
-					?>
-					console.log("Bildirimler okundu.");
-					<?php 
-				} else {
-					?>
-					console.log("Bildirimler okundu.");
-					<?php
+
+		function readNotifications() {
+			$.ajax({
+				url: "ReadNotifs.php",
+				type: "POST",
+				success: function (response) {
+					swal({
+						title: "Başarılı!",
+						text: "Bildirimler başarıyla okundu!",
+						icon: "success"
+					}).then(() => {
+						window.location.reload();
+					})
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					swal({
+						title: "Ups...",
+						text: "Bir hata oluştu, lütfen yöneticiyle iletişime geçin!",
+						icon: "error"
+					}).then(() => { 
+						console.log(textStatus, errorThrown);
+					})
 				}
-				?>
 			});
-		});
+		}
 
 	</script>
 
