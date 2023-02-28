@@ -10,10 +10,10 @@ PHP ve Javascript kullanılarak yapılan, bildirim sisteminin mantığını öğ
 
 # 1.2x
 
-AJAX ile bildirim güncelleme eklendi.<br>
-"script" kodları anasayfadan main.js dosyasına taşındı.<br>
-Buton ile bildirim okuma eklendi.
-Butona SweetAlert eklendi, 3 saniye sonra otomatik olarak kendisi kapanıyor.
-Basit görünüm düzeltmeleri uygulandı.
-Sayfa yüklendiğinde ve her 10 saniyede bir bildirim sayısının güncellenmesi sağlandı.
-Anasayfadaki bildirim sayısı çekme kaldırıldı, otomatik çekiliyor.
+1- AJAX ile bildirim güncelleme eklendi.<br>
+2- "script" kodları anasayfadan main.js dosyasına taşındı.<br>
+3- Buton ile bildirim okuma eklendi.<br>
+4- Butona SweetAlert eklendi, 3 saniye sonra otomatik olarak kendisi kapanıyor.<br>
+5- Basit görünüm düzeltmeleri uygulandı.<br>
+6- Sayfa yüklendiğinde ve her 10 saniyede bir bildirim sayısının güncellenmesi sağlandı.<br>
+7- Anasayfadaki bildirim sayısı çekme kaldırıldı, otomatik çekiliyor.
