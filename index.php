@@ -23,11 +23,7 @@
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
 									<i class="fa-solid fa-bell"></i> 
-									<?php
-									if($notifNum > 0) {
-										echo $notifNum;
-									};
-									?>
+									<span id="notificationNumber"></span>
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									<div class="col-md-12 mt-1">
@@ -55,35 +51,7 @@
 	<script src="https://kit.fontawesome.com/648418db2c.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-	<script type="text/javascript">
-
-		function readNotifications() {
-			$.ajax({
-				url: "ReadNotifs.php",
-				type: "POST",
-				success: function (response) {
-					swal({
-						title: "Başarılı!",
-						text: "Bildirimler başarıyla okundu!",
-						icon: "success"
-					}).then(() => {
-						window.location.reload();
-					})
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					swal({
-						title: "Ups...",
-						text: "Bir hata oluştu, lütfen yöneticiyle iletişime geçin!",
-						icon: "error"
-					}).then(() => { 
-						console.log(textStatus, errorThrown);
-					})
-				}
-			});
-		}
-
-	</script>
+	<script src="main.js"></script>
 
 </body>
 </html>
