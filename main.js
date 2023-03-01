@@ -1,10 +1,13 @@
 $(document).ready(function() {
 	$("#notificationNumber").load("NotificationNumbers.php");
+	$("#notifications").load("GetNotifs.php");
 });
 
 setInterval(function() {
 	$("#notificationNumber").load("NotificationNumbers.php");
+	$("#notifications").load("GetNotifs.php");
 }, 10000);
+
 
 function readNotifications() {
 	$.ajax({
