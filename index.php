@@ -1,5 +1,3 @@
-<?php require_once("./Functions.php"); ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,12 +25,7 @@
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									<div class="col-md-12 mt-1">
-										<?php
-										$result = getNotification();
-										foreach ($result as $a) {
-											echo '<a class="dropdown-item" href="#">' . $a['content'] . '</a>';
-										}
-										?>
+										<div id="notifications"></div>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item col-md-12 mt-1" onclick="readNotifications()">Okundu olarak işaretle</a>
 									</div>
